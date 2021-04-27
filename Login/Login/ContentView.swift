@@ -4,7 +4,6 @@
 //
 //  Created by 지민호 on 2021/04/27.
 //
-
 import SwiftUI
 
 let lightGreyColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, opacity: 1.0)
@@ -15,6 +14,8 @@ let storedUsername = "1234"
 let storedPassword = "1234"
 
 struct ContentView : View {
+    
+    @State var showAlert = false
     
     @State var username: String = ""
     @State var password: String = ""
@@ -51,31 +52,32 @@ struct ContentView : View {
                     }
                 }
                 Button(action: {
+                    
                     if self.username == storedUsername && self.password == storedPassword {
-                        self.authenticationDidSucceed = true
-                        self.authenticationDidFail = false
-                    }
-                    else {
+                        self.showAlert.toggle()
+                        //self.authenticationDidSucceed = true
+                        //self.authenticationDidFail = false
+                    } else {
                         self.authenticationDidFail = true
                     }
                 })
                 {
-                    LoginButtonContent()
+                    Text("로그인")
+                        .font(.headline)
+                        //change
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(width: 350, height: 40)
+                        .background(Color(red: 0.323, green: 0.795, blue: 0.988))
+                        .cornerRadius(15.0)
                 }
                 symbol()
                 }
                 .padding()
-            if authenticationDidSucceed {
-                Text("환영합니다!")
-                    .font(.headline)
-                    .frame(width: 250, height: 50)
-                    .background(Color.green)
-                    .cornerRadius(20.0)
-                    .foregroundColor(.white)
-                    //change
-                    .animation(Animation.default)
-            }
         }.offset(y: editingMode ? -10 : 0)
+        .alert(isPresented: $showAlert) { () -> Alert in
+            Alert(title: Text("로그인 성공!"), message: Text("환영합니다."))
+        }
     }
     
 }
