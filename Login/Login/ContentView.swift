@@ -15,7 +15,7 @@ let storedPassword = "1234"
 
 struct ContentView : View {
     
-    // @State var showAlert = false
+    @State var showAlert = false
     
     @State var username: String = ""
     @State var password: String = ""
@@ -36,86 +36,40 @@ struct ContentView : View {
                 UsernameTextField(username: $username, editingMode: $editingMode)
                 PasswordSecureField(password: $password)
                 
-                /* if authenticationDidFail {
+                if authenticationDidFail {
                     if self.username == "" {
                         Text("아이디를 입력해주세요.")
-                            .offset(y: -10)
-                            .foregroundColor(.red)
-                    }
-                    else if self.password == "" {
+                        .offset(y: -10)
+                        .foregroundColor(.red)
+                    } else if self.password == "" {
                         Text("비밀번호를 입력해주세요.")
                             .offset(y: -10)
                             .foregroundColor(.red)
-                    }
-                    else {
-                        /*
-                         MARK: UI 오류
-                         아이디와 비밀번호를 정상적으로 입력 한 상태에서도 해당 문구가 보이네요!
-                         이 부분은 수정이 필요할 것 같아 보여요!
-                         제 생각은 해당 필드를 공백으로 주고 로그인 버튼을 눌렀을 때 맞는 비밀번호인지 틀린 비밀번호인지 체크하는게 좋아 보입니다!
-                         그렇다면 버튼을 눌렀을 때 alert가 표시가 되도록 해야겠죠?
-                         */
+                    } else {
                         Text("아이디와 비밀번호를 다시 확인해주세요.")
                             .offset(y: -10)
                             .foregroundColor(.red)
                     }
-                } */
+                }
                 Button(action: {
                     if self.username == storedUsername && self.password == storedPassword {
-                        // self.showAlert.toggle()
+                        self.showAlert.toggle()
                         self.authenticationDidSucceed = true
                         self.authenticationDidFail = false
-                        self.usernameIsNil = false
-                        self.passwordIsNil = false
-                    }
-                    else if self.username == "" {
-                        self.usernameIsNil = true
-                        self.authenticationDidSucceed = false
-                        self.authenticationDidFail = false
-                        self.passwordIsNil = false
-                    }
-                    else if self.username != "" && self.password == "" {
-                        self.passwordIsNil = true
-                        self.authenticationDidSucceed = false
-                        self.authenticationDidFail = false
-                        self.usernameIsNil = false
                     } else {
                         self.authenticationDidFail = true
                         self.authenticationDidSucceed = false
-                        self.usernameIsNil = false
-                        self.passwordIsNil = false
-                        
                     }
                 })
                 {
-                    Text("로그인")
-                        .font(.headline)
-                        //change
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(width: 350, height: 40)
-                        .background(Color(red: 0.323, green: 0.795, blue: 0.988))
-                        .cornerRadius(15.0)
+                    LoginButtonContent()
                 }
                 symbol()
                 }
                 .padding()
         }.offset(y: editingMode ? -10 : 0)
         .alert(isPresented: $authenticationDidSucceed) { () -> Alert in
-            /*
-             MARK: 분기
-             여기서 id와 pw가 맞다면 성공을 리턴, 틀리다면 틀렸다는 alert를 리턴할 수 있겠네요!
-             */
             Alert(title: Text("로그인 성공!"), message: Text("환영합니다."))
-        }
-        .alert(isPresented: $usernameIsNil) { () -> Alert in
-         Alert(title: Text("로그인 실패"), message: Text("아이디를 입력해주세요."))
-        }
-        .alert(isPresented: $passwordIsNil) { () -> Alert in
-            Alert(title: Text("로그인 실패"), message: Text("비밀번호를 입력해주세요."))
-        }
-        .alert(isPresented: $authenticationDidFail) { () -> Alert in
-            Alert(title: Text("로그인 실패"), message: Text("아이디와 비밀번호를 다시 확인해주세요."))
         }
     }
 }
@@ -125,7 +79,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
             .previewDevice(PreviewDevice(rawValue: "iPhone 12 Pro Max"))
-
     }
 }
 #endif
