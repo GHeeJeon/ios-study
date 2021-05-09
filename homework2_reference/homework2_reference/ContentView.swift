@@ -11,23 +11,42 @@ struct ContentView: View {
     var body: some View {
 NavigationView {
     VStack {
-        
         Text("Hello")
             .navigationTitle("첫번째 페이지")
         
         NavigationLink(
-            destination: FinalView(),
+            destination: NextView(),
             label: {
-                Button
-                Text("다음 페이지")
-             })
+                Text("Navigate")
+            })
     }
 }
     }
 }
+
+struct NextView: View {
+    var body: some View {
+        VStack {
+            Text("두번째 화면")
+            
+            NavigationLink(
+                destination: FinalView(),
+                label: {
+                    Text("Navigate")
+                })
+        }
+    }
+}
+
 struct FinalView: View {
     var body: some View {
         Text("마지막 화면")
+        
+        NavigationLink(
+            destination: ContentView(),
+            label: {
+                Text("Navigate")
+            })
     }
 }
 

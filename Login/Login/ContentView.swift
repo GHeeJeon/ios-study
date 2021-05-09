@@ -6,24 +6,18 @@
 //
 import SwiftUI
 
-let lightGreyColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, opacity: 1.0)
-
-let skyBlueColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, opacity: 1.0)
-
-let storedUsername = "1234"
+let storedIdentity = "1234"
 let storedPassword = "1234"
 
 struct ContentView : View {
     
     @State var showAlert = false
     
-    @State var username: String = ""
+    @State var identity: String = ""
     @State var password: String = ""
     
     @State var authenticationDidFail: Bool = false
     @State var authenticationDidSucceed: Bool = false
-    @State var usernameIsNil: Bool = false
-    @State var passwordIsNil: Bool = false
     
     @State var editingMode: Bool = false
     
@@ -33,15 +27,15 @@ struct ContentView : View {
             NavigationView{
                 VStack {
                     logo()
-                    UsernameTextField(username: $username, editingMode: $editingMode)
+                    IdentityTextField(identity: $identity, editingMode: $editingMode)
                     PasswordSecureField(password: $password)
                     
                     if authenticationDidFail {
-                        if self.username == "" {
+                        if self.identity.isEmpty {
                             Text("아이디를 입력해주세요.")
                             .offset(y: -10)
                             .foregroundColor(.red)
-                        } else if self.password == "" {
+                        } else if self.password.isEmpty {
                             Text("비밀번호를 입력해주세요.")
                                 .offset(y: -10)
                                 .foregroundColor(.red)
@@ -52,7 +46,7 @@ struct ContentView : View {
                         }
                     }
                     Button(action: {
-                        if self.username == storedUsername && self.password == storedPassword {
+                        if self.identity == storedIdentity && self.password == storedPassword {
                             self.showAlert.toggle()
                             self.authenticationDidSucceed = true
                             self.authenticationDidFail = false
@@ -66,16 +60,9 @@ struct ContentView : View {
                     }
                     
                     NavigationLink(
-                        destination: FinalView(),
+                        destination: SignUpView(),
                         label: {
-                            Text("회원가입")
-                                .font(.headline)
-                                //change
-                                .foregroundColor(.white)
-                                .padding()
-                                .frame(width: 350, height: 40)
-                                .background(Color(hue: 0.611, saturation: 0.708, brightness: 0.971))
-                                .cornerRadius(15.0)
+                            SignInButtonContent()
                         })
                     symbol()
 
@@ -91,8 +78,12 @@ struct ContentView : View {
 #if DEBUG
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
-            .previewDevice(PreviewDevice(rawValue: "iPhone 12 Pro Max"))
+        Group {
+            ContentView()
+                .previewDevice(PreviewDevice(rawValue: "iPhone 12 Pro Max"))
+            ContentView()
+                .previewDevice(PreviewDevice(rawValue: "iPhone 12 Pro Max"))
+        }
     }
 }
 #endif
@@ -156,23 +147,34 @@ struct SignInButtonContent : View {
     }
 }
 
-struct UsernameTextField : View {
+struct SignUpButtonContent : View {
+    var body: some View {
+        return Text("가입하기")
+            .font(.headline)
+            //change
+            .foregroundColor(.white)
+            .padding()
+            .frame(width: 350, height: 40)
+            .background(Color(hue: 0.611, saturation: 0.704, brightness: 0.838))
+            .cornerRadius(15.0)
+    }
+}
+
+struct IdentityTextField : View {
     
-    @Binding var username: String
+    @Binding var identity: String
     
     @Binding var editingMode: Bool
     
     var body: some View {
-        return TextField("", text: $username, onEditingChanged: {edit in
+        return TextField("Identity", text: $identity, onEditingChanged: {edit in
             if edit == true
             {self.editingMode = true}
             else
             {self.editingMode = false}
         })
-    
             .padding()
             .textFieldStyle(RoundedBorderTextFieldStyle())
-
     }
 }
 
@@ -181,15 +183,81 @@ struct PasswordSecureField : View {
     @Binding var password: String
     
     var body: some View {
-        return SecureField("", text: $password)
+        return SecureField("Password", text: $password)
             .padding()
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .padding(.top, -20)
     }
 }
 
-struct FinalView: View {
+struct UsernameTextField : View {
+    
+    @Binding var username: String
+    
     var body: some View {
-        Text("마지막 화면")
+        return TextField("Username", text: $username)
+            .padding()
+            .textFieldStyle(RoundedBorderTextFieldStyle())
     }
+}
+
+
+struct SignUpView: View {
+    @State var showAlert = false
+    
+    @State var identity: String = ""
+    @State var password: String = ""
+    @State var username: String = ""
+    
+    @State var SignUpDidFail: Bool = false
+    @State var SignUpDidSucceed: Bool = false
+    
+    @State var editingMode: Bool = false
+    
+    var body: some View {
+        
+        ZStack {
+            NavigationView{
+                VStack {
+                    UsernameTextField(username: $username)
+                    IdentityTextField(identity: $identity, editingMode: $editingMode)
+                    PasswordSecureField(password: $password)
+                    
+                    if SignUpDidFail {
+                        if self.identity.isEmpty {
+                            Text("아이디를 입력해주세요.")
+                            .offset(y: -10)
+                            .foregroundColor(.red)
+                        } else if self.password.isEmpty {
+                            Text("비밀번호를 입력해주세요.")
+                                .offset(y: -10)
+                                .foregroundColor(.red)
+                        } else {
+                            Text("아이디와 비밀번호를 다시 확인해주세요.")
+                                .offset(y: -10)
+                                .foregroundColor(.red)
+                        }
+                    }
+                    
+                    Button(action: {
+                        if self.identity == storedIdentity && self.password == storedPassword {
+                            self.showAlert.toggle()
+                            self.SignUpDidSucceed = true
+                            self.SignUpDidFail = false
+                        } else {
+                            self.SignUpDidFail = true
+                            self.SignUpDidSucceed = false
+                        }
+                    })
+                    {
+                        SignUpButtonContent()
+                    }
+                    
+                }.padding()
+        }.offset(y: editingMode ? -10 : 0)
+        .alert(isPresented: $SignUpDidSucceed) { () -> Alert in
+            Alert(title: Text("회원가입 완료!"), message: Text(username))
+        }
+    }
+}
 }
