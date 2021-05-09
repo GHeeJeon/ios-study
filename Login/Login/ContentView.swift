@@ -4,15 +4,23 @@
 //
 //  Created by 지민호 on 2021/04/27.
 //
+// 글자 수 제한, 비밀번호 토글
+
 import SwiftUI
 
-let storedIdentity = "1234"
-let storedPassword = "1234"
+var storedIdentity = ""
+var storedPassword = ""
+// let storedIdentity = "1234"
+// let storedPassword = "1234"
+
 
 struct ContentView : View {
     
     @State var showAlert = false
     
+    @State var storedIdentity = UserDefaults.standard.string(forKey: "storedIdentity")
+    @State var storedPassword = UserDefaults.standard.string(forKey: "storedPassword")
+
     @State var identity: String = ""
     @State var password: String = ""
     
@@ -205,6 +213,9 @@ struct UsernameTextField : View {
 struct SignUpView: View {
     @State var showAlert = false
     
+    @State var storedIdentity = UserDefaults.standard.string(forKey: "storedIdentity")
+    @State var storedPassword = UserDefaults.standard.string(forKey: "storedPassword")
+    
     @State var identity: String = ""
     @State var password: String = ""
     @State var username: String = ""
@@ -224,7 +235,11 @@ struct SignUpView: View {
                     PasswordSecureField(password: $password)
                     
                     if SignUpDidFail {
-                        if self.identity.isEmpty {
+                        if self.username.isEmpty {
+                            Text("이름을 입력해주세요.")
+                            .offset(y: -10)
+                            .foregroundColor(.red)
+                        } else if self.identity.isEmpty {
                             Text("아이디를 입력해주세요.")
                             .offset(y: -10)
                             .foregroundColor(.red)
@@ -240,7 +255,7 @@ struct SignUpView: View {
                     }
                     
                     Button(action: {
-                        if self.identity == storedIdentity && self.password == storedPassword {
+                        if self.username != "" && self.identity != "" && self.password != "" {
                             self.showAlert.toggle()
                             self.SignUpDidSucceed = true
                             self.SignUpDidFail = false
