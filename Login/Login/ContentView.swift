@@ -30,46 +30,60 @@ struct ContentView : View {
     var body: some View {
         
         ZStack {
-            VStack {
-                // WelcomeText()
-                logo()
-                UsernameTextField(username: $username, editingMode: $editingMode)
-                PasswordSecureField(password: $password)
-                
-                if authenticationDidFail {
-                    if self.username == "" {
-                        Text("아이디를 입력해주세요.")
-                        .offset(y: -10)
-                        .foregroundColor(.red)
-                    } else if self.password == "" {
-                        Text("비밀번호를 입력해주세요.")
+            NavigationView{
+                VStack {
+                    logo()
+                    UsernameTextField(username: $username, editingMode: $editingMode)
+                    PasswordSecureField(password: $password)
+                    
+                    if authenticationDidFail {
+                        if self.username == "" {
+                            Text("아이디를 입력해주세요.")
                             .offset(y: -10)
                             .foregroundColor(.red)
-                    } else {
-                        Text("아이디와 비밀번호를 다시 확인해주세요.")
-                            .offset(y: -10)
-                            .foregroundColor(.red)
+                        } else if self.password == "" {
+                            Text("비밀번호를 입력해주세요.")
+                                .offset(y: -10)
+                                .foregroundColor(.red)
+                        } else {
+                            Text("아이디와 비밀번호를 다시 확인해주세요.")
+                                .offset(y: -10)
+                                .foregroundColor(.red)
+                        }
                     }
-                }
-                Button(action: {
-                    if self.username == storedUsername && self.password == storedPassword {
-                        self.showAlert.toggle()
-                        self.authenticationDidSucceed = true
-                        self.authenticationDidFail = false
-                    } else {
-                        self.authenticationDidFail = true
-                        self.authenticationDidSucceed = false
+                    Button(action: {
+                        if self.username == storedUsername && self.password == storedPassword {
+                            self.showAlert.toggle()
+                            self.authenticationDidSucceed = true
+                            self.authenticationDidFail = false
+                        } else {
+                            self.authenticationDidFail = true
+                            self.authenticationDidSucceed = false
+                        }
+                    })
+                    {
+                        LoginButtonContent()
                     }
-                })
-                {
-                    LoginButtonContent()
-                }
-                symbol()
-                }
-                .padding()
+                    
+                    NavigationLink(
+                        destination: FinalView(),
+                        label: {
+                            Text("회원가입")
+                                .font(.headline)
+                                //change
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(width: 350, height: 40)
+                                .background(Color(hue: 0.611, saturation: 0.708, brightness: 0.971))
+                                .cornerRadius(15.0)
+                        })
+                    symbol()
+
+                }.padding()
         }.offset(y: editingMode ? -10 : 0)
         .alert(isPresented: $authenticationDidSucceed) { () -> Alert in
             Alert(title: Text("로그인 성공!"), message: Text("환영합니다."))
+        }
         }
     }
 }
@@ -129,6 +143,19 @@ struct LoginButtonContent : View {
     }
 }
 
+struct SignInButtonContent : View {
+    var body: some View {
+        return Text("회원가입")
+            .font(.headline)
+            //change
+            .foregroundColor(.white)
+            .padding()
+            .frame(width: 350, height: 40)
+            .background(Color(hue: 0.611, saturation: 0.708, brightness: 0.971))
+            .cornerRadius(15.0)
+    }
+}
+
 struct UsernameTextField : View {
     
     @Binding var username: String
@@ -158,5 +185,11 @@ struct PasswordSecureField : View {
             .padding()
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .padding(.top, -20)
+    }
+}
+
+struct FinalView: View {
+    var body: some View {
+        Text("마지막 화면")
     }
 }
