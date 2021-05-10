@@ -205,6 +205,7 @@ struct SignUpIdentityTextField : View {
         return TextField("아이디", text: $signupIdentity)
             .padding()
             .textFieldStyle(RoundedBorderTextFieldStyle())
+            .padding(.top, -20)
     }
 }
 
@@ -216,6 +217,7 @@ struct SignUpPasswordTextField : View {
         return TextField("비밀번호", text: $signupPassword)
             .padding()
             .textFieldStyle(RoundedBorderTextFieldStyle())
+            .padding(.top, -20)
     }
 }
 
@@ -278,10 +280,10 @@ struct SignUpView: View {
                     }
                     
                 }.padding()
-        }.offset(y: editingMode ? -10 : 0)
-        .alert(isPresented: $SignUpDidSucceed) { () -> Alert in
-            Alert(title: Text("회원가입 완료!"), message: Text(signupUsername))
+            }.offset(y: editingMode ? -10 : 0)
+            .alert(isPresented: $SignUpDidSucceed) { () -> Alert in
+                Alert(title: Text("회원가입 완료!"), message: Text(signupUsername))
+            }
         }
     }
-}
 }
