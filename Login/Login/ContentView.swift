@@ -21,6 +21,11 @@ struct ContentView : View {
     @State var identity: String = ""
     @State var password: String = ""
     
+    // @State var storedIdentity = UserDefaults.standard.value(forKey: "storedIdentity")
+    // @State var storedPassword = UserDefaults.standard.value(forKey: "storedIdentity")
+    // 이렇게 쓰는 게 아닌가봐요ㅠㅠㅠ
+    // 저장한 아이디랑 비밀번호 값을 불러오려면 어떻게 해야 할까요...?
+    
     @State var authenticationDidFail: Bool = false
     @State var authenticationDidSucceed: Bool = false
     
@@ -214,7 +219,7 @@ struct SignUpPasswordTextField : View {
     @Binding var signupPassword: String
     
     var body: some View {
-        return TextField("비밀번호", text: $signupPassword)
+        return SecureField("비밀번호", text: $signupPassword)
             .padding()
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .padding(.top, -20)
@@ -241,6 +246,7 @@ struct SignUpView: View {
         ZStack {
             NavigationView{
                 VStack {
+                    logo()
                     SignUpUsernameTextField(signupUsername: $signupUsername)
                     SignUpIdentityTextField(signupIdentity: $signupIdentity)
                     SignUpPasswordTextField(signupPassword: $signupPassword)
@@ -259,9 +265,6 @@ struct SignUpView: View {
                                 .offset(y: -10)
                                 .foregroundColor(.red)
                         } else {
-                            Text("아이디와 비밀번호를 다시 확인해주세요.")
-                                .offset(y: -10)
-                                .foregroundColor(.red)
                         }
                     }
                     
@@ -278,6 +281,7 @@ struct SignUpView: View {
                     {
                         SignUpButtonContent()
                     }
+                    symbol()
                     
                 }.padding()
             }.offset(y: editingMode ? -10 : 0)
