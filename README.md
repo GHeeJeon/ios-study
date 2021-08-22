@@ -1,4 +1,15 @@
 # ios-study
+![Swift](https://img.shields.io/badge/swift-F54A2A?style=flat-square&logo=swift&logoColor=white) 
+![Xcode](https://img.shields.io/badge/Xcode-007ACC?style=flat-square&logo=Xcode&logoColor=white) 
+![IOS](https://img.shields.io/badge/iOS-000000?style=flat-square&logo=ios&logoColor=white) 
+![Git](https://img.shields.io/badge/-Git-F05032?style=flat-square&logo=git&logoColor=white) 
+[![GitHub issues](https://img.shields.io/github/issues/GHeeJeon/ios-study?style=flat-square)](https://github.com/GHeeJeon/ios-study/issues)
+[![GitHub forks](https://img.shields.io/github/forks/GHeeJeon/ios-study?style=flat-square)](https://github.com/GHeeJeon/ios-study/network) 
+[![GitHub stars](https://img.shields.io/github/stars/GHeeJeon/ios-study?style=flat-square)](https://github.com/GHeeJeon/ios-study/stargazers) 
+[![GitHub license](https://img.shields.io/github/license/GHeeJeon/ios-study?style=flat-square)](https://github.com/GHeeJeon/ios-study) 
+[![GitHub last commits](https://img.shields.io/github/last-commit/GHeeJeon/ios-study?style=flat-square)](https://github.com/GHeeJeon/ios-study/commits/main) 
+
+
 본격 ios 튜토리얼
 
 `SwiftUI` 를 사용합니다.
