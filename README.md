@@ -8,6 +8,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/GHeeJeon/ios-study?style=flat-square)](https://github.com/GHeeJeon/ios-study/stargazers) 
 [![GitHub license](https://img.shields.io/github/license/GHeeJeon/ios-study?style=flat-square)](https://github.com/GHeeJeon/ios-study) 
 [![GitHub last commits](https://img.shields.io/github/last-commit/GHeeJeon/ios-study?style=flat-square)](https://github.com/GHeeJeon/ios-study/commits/main) 
+![GitHub search hit counter](https://img.shields.io/github/search/GHeeJeon/ios-study/goto?style=flat-square)
 
 
 본격 ios 튜토리얼
